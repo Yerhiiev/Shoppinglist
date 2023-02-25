@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1>Add item: </h1>
+<form action="/shopping_list/" method="post">
+    {% csrf_token %}
+    <input type="text" name="item" placeholder="item">
+    <input type="number" name="quantity" placeholder="Quantity">
+    <select name="shop">
+        {% for shop in shops %}
+            <option value="{{ shop.id }}">{{ shop.name }}</option>
+        {% endfor %}
+    </select>
+    <input type="submit" value="Add">
+</form>
+<br>
+    {% for item in shopping_list_data %}
+        <p>{{ item.item_id.name }} {{ item.quantity }} {{ item.item_id.shop_id.name }}
+        <form method="post" action="/shopping_list/{{ item.item_id.id }} {{ item.quantity }} /buy">
+        {% csrf_token %}
+        <input type="text" name="price" placeholder="price">
+        <label for="buy_date">buy date:</label>
+        <input type="date" id="buy_date" name="buy_date"
+        value="2023-01-01"
+        min="2023-01-01" max="2033-12-31">
+        <input type="submit" value="buy">
+        </form></p>
+    {% endfor %}
+
+    {% for item in shopping_list_data %}
+        <p>{{ item.item_id.name }} {{ item.quantity }} {{ item.item_id.shop_id.name }}
+        <form method="post" action="/shopping_list/{{ item.item_id.id }}/remove">
+        {% csrf_token %}
+        <input type="submit" value="remove">
+        </p>
+    </form>
+    {% endfor %}
+<br>
+<br>
+    <h3> Add Shop: </h3>
+<form action="/shopping_list/shop" method="post">
+    {% csrf_token %}
+    <input type="text" name="shop" placeholder="shop">
+    <select name="list">
+        {% for list in lists %}
+            <option value="{{ list.id }}">{{ list.list_id }}</option>
+        {% endfor %}
+    </select>
+    <input type="submit" value="Add">
+<br>
+</form>
+
+</body>
+</html>
