@@ -8,7 +8,8 @@ from django.contrib.auth.models import User
 def index(request):
     if not request.user.is_authenticated:
         return redirect('/user/login')
-    user_list = UserList.objects.filter(user_id=1).first()
+    user_id = request.user.id
+    user_list = UserList.objects.filter(user_id=user_id).first()
     if request.method == 'POST':
         item_name = request.POST.get('item')
         quantity = request.POST.get('quantity')
@@ -32,7 +33,8 @@ def buy_item(request, item_id, quantity):
     if not request.user.is_authenticated:
         return redirect('/user/login')
     if request.method == 'POST':
-        user_list = UserList.objects.filter(user_id=1).first()
+        user_id = request.user.id
+        user_list = UserList.objects.filter(user_id=user_id).first()
         price = request.POST.get('price')
         status = 'bought'
         buy_date = request.POST.get('buy_date')
@@ -60,7 +62,8 @@ def add_shop(request):
         return redirect('/user/login')
     if request.user.is_authenticated:
         if request.method == 'POST':
-            mall_list = UserList.objects.filter(user_id=1).first()
+            user_id = request.user.id
+            mall_list = UserList.objects.filter(user_id=user_id).first()
             shop = request.POST.get('shop')
             shop_object = Mallist(name=shop, list_id=mall_list.list_id)
             shop_object.save()
