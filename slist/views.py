@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.conf import settings
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseNotFound
 from .models import Shoppinglist, UserList, Mallist, Item
 from django.contrib.auth.models import User
 
